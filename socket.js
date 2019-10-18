@@ -11,10 +11,7 @@ server.listen(port, function () {
     console.log('Server listening at port %d', port);
 });
 var Redis = require("ioredis");
-var sub = new Redis({
-    port: 6379, // Redis port
-    host: "redis-server", // Redis host
-});
+var sub = new Redis(process.env.REDIS_URI);
 
 sub.subscribe("notify", "music", function (err, count) {
     if (err) throw err;

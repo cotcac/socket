@@ -1,8 +1,5 @@
 version: '3'
 services:
-  redis-server:
-    image: 'redis'
-    restart: always
   my-socket-app:
     build: .
     volumes:
@@ -10,6 +7,9 @@ services:
     ports:
       - "${PORT}:${PORT}"
     restart: always
-    depends_on:
-      - redis-server
+    networks: 
+      - mynet      
     command: nodemon socket.js
+networks:
+  mynet: 
+    external: true  
