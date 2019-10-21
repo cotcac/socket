@@ -12,16 +12,18 @@ server.listen(port, function () {
 });
 var Redis = require("ioredis");
 var sub = new Redis(process.env.REDIS_URI);
-
-sub.subscribe("notify", "music", function (err, count) {
-    if (err) throw err;
-    console.log(count);
+const arrayChannel = process.env.CHANNEL.split(',');// ["notify", "music"]
+sub.subscribe(...arrayChannel, function (err, count) {
+    if (err) {
+        console.log('[ERROR] SUBCRIBE CHANNEL',err);
+        process.exit(1);
+    }
+    console.log(`SUBCRIBE TO ${count} CHANNELS`);
 })
 
 
 io.on('connection', function (socket) {
     // send message
-    console.log("[x]", socket.id);
     sub.on("message", function (channel, message) {
         console.log("receive: [%s] [%s]", message, channel);
         const data = JSON.parse(message);
@@ -29,8 +31,8 @@ io.on('connection', function (socket) {
         * If Message have sessionID send to only 1 client.
         * Else send to all client connect to that room.
         */
-        const room = (data.sessionID)? `${channel}${data.sessionID}`:`${channel}`;
-        socket.emit(room , "hello " + message);
+        const room = (data.sessionID)? `${channel} ${data.sessionID}`:`${channel}`;
+        socket.emit(room , "hello " + data.content);
     })
 
 });
