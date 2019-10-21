@@ -29,7 +29,7 @@ io.on('connection', function (socket) {
         * If Message have sessionID send to only 1 client.
         * Else send to all client connect to that room.
         */
-        const room = (data.sessionID)? `new message_${data.sessionID}`:`new message_`;
+        const room = (data.sessionID)? `${channel}${data.sessionID}`:`${channel}`;
         socket.emit(room , "hello " + message);
     })
 
