@@ -77,4 +77,4 @@ CHANNEL=notify,news,music
 
 # Example Client and API
 
-https://github.com/cotcac/socketio
+https://github.com/cotcac/client-api-for-socket
