@@ -24,7 +24,13 @@ io.on('connection', function (socket) {
     console.log("[x]", socket.id);
     sub.on("message", function (channel, message) {
         console.log("receive: [%s] [%s]", message, channel);
-        socket.emit(socket.id + '_new message', "hello " + message);
+        const data = JSON.parse(message);
+       /**
+        * If Message have sessionID send to only 1 client.
+        * Else send to all client connect to that room.
+        */
+        const room = (data.sessionID)? `new message_${data.sessionID}`:`new message_`;
+        socket.emit(room , "hello " + message);
     })
 
 });

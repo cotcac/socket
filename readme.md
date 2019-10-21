@@ -7,6 +7,12 @@ This socket server help you communicate with client.
 
 # Quick start
 
+## First run Redis server
+
+```
+docker run --name redis --net=mynet -d -e ALLOW_EMPTY_PASSWORD=yes bitnami/redis:latest
+```
+## Then Run the app
 ```
 docker-compose up
 ```
@@ -33,11 +39,6 @@ pub.publish("notify", `this is the messaage`);
         console.log('[Node server:] ' + data);
 });
 
-```
-# Run Redis server
-
-```
-docker run --name redis --net=mynet -e ALLOW_EMPTY_PASSWORD=yes bitnami/redis:latest
 ```
 
 # .env
