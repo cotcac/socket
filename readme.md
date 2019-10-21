@@ -74,3 +74,7 @@ PORT=3001
 REDIS_URI=redis://redis:6379
 CHANNEL=notify,news,music
 ```
+
+# Example Client and API
+
+https://github.com/cotcac/socketio
